@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Soundbuttons</title>
+</head>
+<body>
+        <div class="keys">
+            <div data-key="65" class="key"> <img src="/assets/mario.svg" alt="Coin"> <h1>A</h1></div>
+            <div data-key="83" class="key"> <img src="/assets/whatsapp.svg" alt="Whatsapp"> <h1>S</h1></div>
+            <div data-key="68" class="key"> <img src="/assets/xbox.svg" alt="Xbox"> <h1>D</h1></div>
+        </div>
+
+
+
+        <audio data-key="65" class="coin" src="/assets/mario_coin.mp3"></audio>
+        <audio data-key="83" class="wpp" src="/assets/wppweb.mp3"></audio>
+        <audio data-key="68" class="xbox" src="/assets/xboxone.mp3"></audio>
+
+
+
+        <script>
+            window.addEventListener('keydown', playSound)
+
+            function playSound(e){
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+            const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+            if(!audio) return;
+            audio.currentTime = 0
+            audio.play()
+            key.classList.add('playing')
+        }
+
+        function removeTransition(e){
+            if(e.propertyName !== 'transform') return;
+            this.classList.remove('playing')
+        }
+
+        const keys = document.querySelectorAll('.key')
+        keys.forEach( key => key.addEventListener('transitionend', removeTransition))
+        </script>
+</body>
+</html>
